@@ -1,32 +1,25 @@
-import Header from './Header.jsx'
-import './index.css'
-import {db} from './config/firebase.js'
-import { useState, useEffect } from 'react'
-import {getDocs, collection} from 'firebase/firestore'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import Header from './Header';
+import ProductDisplay from './ProductDisplay';
+import ProductDetails from './ProductDetails'; // Placeholder for detailed product page
 
 function App() {
-  const [computerList, setComputerList] = useState([])
-
-  const computerCollectionRef = collection(db, "computers")
-
-  useEffect(() => {
-    const getComputerList = async() => {
-      try{
-        const data = await getDocs(computerCollectionRef)
-        console.log(data)
-      }catch(err){
-        console.error(err)
-      }
-    };
-
-    getComputerList()
-  },[])
-
   return (
-    <>
-      <Header/>
-    </>
-  )
+    <Router>
+      <div className="app">
+        <Header />
+        <Routes>
+          <Route path="/" element={<ProductDisplay />} />
+          <Route
+            path="/computers/:productId" // Dynamic route parameter for product ID
+            element={<ProductDetails />}
+          />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
-export default App
+export default App;
