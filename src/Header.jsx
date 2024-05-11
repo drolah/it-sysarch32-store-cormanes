@@ -11,7 +11,6 @@ const handleClick = () => {
     return (
       <header className="header">
         <h1 className='store' onClick={handleClick}>Kim Store</h1>
-        <Link to={'/cart'}> <img src='https://cdn-icons-gif.flaticon.com/12414/12414305.gif' className='cart'/></Link>
       </header>
       
     );

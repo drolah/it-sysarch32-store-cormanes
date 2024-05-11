@@ -1,14 +1,54 @@
 import React, {useState} from 'react';
-import './ProductDetails.css'   
-import ProductDisplay from './ProductDisplay';
+import './ProductDetails.css' 
 import './Cart.css'
+import { loadStripe } from '@stripe/stripe-js';
+import { useNavigate } from 'react-router-dom';
+
+// Load the Stripe.js library with your publishable API key
+const stripePromise = loadStripe('pk_test_51PFA92RufsXPCz6P8zttUAKK6LOVP4kKS5o1w2CfUGfbaewqel7GT57NcA8WGWgudblEL8nAnEalejyUL6I1OtKh00eAerDVM1'); // Replace with your publishable key
+
 
 const ProductCard = ({ product }) => {
   const { id, model, brand, image, price, ram, storage, processor } = product;
-  const [isChecked, setIsChecked] = useState(false);
-  const handleClick = () => {
-    setIsChecked(!isChecked);
+  const priceFloat = parseFloat(price);
+  const navigate = useNavigate();
+  
+
+  const handleClickCheckout = async () => {
+    const stripe = await stripePromise;
+
+    // Send a request to the backend to create a checkout session
+    const response = await fetch('http://localhost:4000/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ model, price: priceFloat * 100 }), // Send product name and price to the backend
+    });
+
+    if (response.ok) {
+      // If the request is successful, retrieve the session ID from the response
+      const session = await response.json();
+
+      // Redirect the user to the Stripe Checkout page using the session ID
+      const result = await stripe.redirectToCheckout({ sessionId: session.id });
+
+      if (result.error) {
+        // If there is an error during the redirect, display the error message
+        setError(result.error.message);
+      }
+      else{
+        navigate(`/computers/${id}`)
+      }
+    } else {
+      // If there is an error creating the checkout session, display an error message
+      setError('Error creating checkout session');
+    }
   };
+
+
+
+
 
   return (
     <>
@@ -23,14 +63,8 @@ const ProductCard = ({ product }) => {
         <h4 className='storage'>Storage: {storage}</h4>
         <h4 className='processor'>Processor{processor}</h4>
       </div>
-      <button className="button" onClick={handleClick} alt="Cart">
-      <span className="button-text">Add to cart</span>
-
-      <img
-        src={isChecked ? "https://cdn-icons-png.flaticon.com/128/1634/1634264.png" : "https://cdn-icons-png.flaticon.com/128/1170/1170576.png"}
-        alt={isChecked ? "Checked" : "Cart"}
-        className="button-icon"
-      />
+      <button className="button" alt="Cart" onClick={handleClickCheckout}>
+      <span className="button-text">Checkout</span>
     </button>
     </div>
     </>
