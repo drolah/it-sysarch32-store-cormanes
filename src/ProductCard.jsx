@@ -6,7 +6,7 @@ import { loadStripe } from '@stripe/stripe-js';
 // Load the Stripe.js library with your publishable API key
 const stripePromise = loadStripe('pk_test_51PFA92RufsXPCz6P8zttUAKK6LOVP4kKS5o1w2CfUGfbaewqel7GT57NcA8WGWgudblEL8nAnEalejyUL6I1OtKh00eAerDVM1'); // Replace with your publishable key
 
-
+ 
 const ProductCard = ({ product }) => {
   const { id, model, brand, image, price, ram, storage, processor } = product;
   const priceFloat = parseFloat(price);
