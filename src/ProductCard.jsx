@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import './ProductDetails.css' 
 import './Cart.css'
 import { loadStripe } from '@stripe/stripe-js';
-import { useNavigate } from 'react-router-dom';
 
 // Load the Stripe.js library with your publishable API key
 const stripePromise = loadStripe('pk_test_51PFA92RufsXPCz6P8zttUAKK6LOVP4kKS5o1w2CfUGfbaewqel7GT57NcA8WGWgudblEL8nAnEalejyUL6I1OtKh00eAerDVM1'); // Replace with your publishable key
@@ -11,7 +10,6 @@ const stripePromise = loadStripe('pk_test_51PFA92RufsXPCz6P8zttUAKK6LOVP4kKS5o1w
 const ProductCard = ({ product }) => {
   const { id, model, brand, image, price, ram, storage, processor } = product;
   const priceFloat = parseFloat(price);
-  const navigate = useNavigate();
   
 
   const handleClickCheckout = async () => {
@@ -36,9 +34,6 @@ const ProductCard = ({ product }) => {
       if (result.error) {
         // If there is an error during the redirect, display the error message
         setError(result.error.message);
-      }
-      else{
-        navigate(`/computers/${id}`)
       }
     } else {
       // If there is an error creating the checkout session, display an error message
