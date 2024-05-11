@@ -21,7 +21,6 @@ const ProductDisplay = () => {
         console.error(err);
       }
     };
-
     getComputerList();
   }, []);
 

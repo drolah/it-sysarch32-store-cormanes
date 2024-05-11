@@ -1,0 +1,29 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background-color: #007bff; /* Change to your desired button background color */
+  color: #fff; /* Change to your desired button text color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute; /* Make the button absolutely positioned */
+  bottom: 30px;  /* Position it 10px from the bottom */
+  right: 30px;
+}
+
+.button-text {
+  margin-right: 10px; /* Adjust spacing between text and icon */
+}
+
+.button-icon {
+  width: 20px; /* Adjust icon size */
+  height: 20px; /* Adjust icon size */
+  transition: transform 0.1s ease; /* Add transition property */
+  justify-self: flex-end;
+}
+
+.button:hover .button-icon {
+  transform: scale(1.3); /* Scale the image on hover */
+}

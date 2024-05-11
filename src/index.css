@@ -3,4 +3,5 @@ body {
   padding: 0;
   margin-left: 15%;
   margin-right: 15%;
+  background: linear-gradient(to right, #d0e2ef, #b7b7ee, #d0e2ef, #b7b7ee);
 }
