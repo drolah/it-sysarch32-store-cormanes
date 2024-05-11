@@ -12,7 +12,6 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<ProductDisplay />} />
-          <Route path="/complete" element={<ProductDisplay />} />
           <Route path="/computers" element={<ProductDisplay />} />
           <Route
             path="/computers/:productId" // Dynamic route parameter for product ID
